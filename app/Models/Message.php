@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
 
+    protected $table = 'messages';
+
     private $idMsg;
     private $id_chat;
     private $id_sender;
@@ -34,5 +36,11 @@ class Message extends Model
     public function chat()
     {
         return $this->belongsTo(Chat::class, 'id_chat', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_sender', 'id');
+
     }
 }
