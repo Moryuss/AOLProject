@@ -1,0 +1,250 @@
+/* AOL Style Theme */
+/* body.aol-body {
+    font-family: Tahoma, sans-serif;
+    background-color: #f0f0e8;
+    color: #333;
+}
+
+.aol-navbar {
+    background-color: #4b0082;
+    color: #fff;
+    font-weight: bold;
+}
+
+.aol-navbar .navbar-brand,
+.aol-navbar .nav-link,
+.aol-navbar .btn {
+    color: #fff;
+}
+
+.aol-navbar .nav-link.active {
+    background-color: #6a0dad;
+    border-radius: 5px;
+}
+
+.aol-sidebar {
+    background-color: #e6e6ff;
+    border-right: 2px solid #4b0082;
+    height: 100vh;
+}
+
+.aol-list-item {
+    background-color: #fff;
+    margin-bottom: 0.5rem;
+    border: 1px solid #999;
+    font-weight: bold;
+    color: #4b0082;
+    cursor: pointer;
+}
+
+.aol-group {
+    background-color: #e0ffe0;
+    color: #006400;
+}
+
+.aol-chat-box {
+    background-color: #fff;
+    border: 2px inset #999;
+    padding: 1rem;
+    height: 60vh;
+    overflow-y: auto;
+    box-shadow: inset 0 0 5px #ccc;
+}
+
+.aol-user {
+    color: #00008b;
+}
+
+.aol-btn {
+    background-color: #dcdcff;
+    border: 1px solid #999;
+}
+
+.aol-btn-send {
+    background-color: #4b0082;
+    color: white;
+    border: none;
+} */
+
+/* CLAUDE CSS */
+body.aol-body {
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    background-color: #d6d6ce;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+.aol-navbar {
+    background-color: #2961c1;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 2px solid #104080;
+    box-shadow: inset 0 -1px 0 #5a82c5;
+}
+
+.aol-navbar .navbar-brand,
+.aol-navbar .nav-link,
+.aol-navbar .btn {
+    color: #fff;
+    text-shadow: 1px 1px 0 #104080;
+}
+
+.aol-navbar .nav-link.active {
+    background-color: #3971d1;
+    border-radius: 0;
+    border-top: 1px solid #5a82c5;
+    border-left: 1px solid #5a82c5;
+    border-right: 1px solid #104080;
+    border-bottom: 1px solid #104080;
+}
+
+.aol-sidebar {
+    background-color: #ece9d8;
+    border-right: 1px solid #aca899;
+    height: 100vh;
+    box-shadow: inset -1px 0 0 #ffffff;
+}
+
+.aol-list-item {
+    background-color: #ece9d8;
+    margin-bottom: 0.25rem;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #aca899;
+    border-bottom: 1px solid #aca899;
+    font-weight: normal;
+    color: #000000;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.aol-list-item:hover {
+    background-color: #e1e0d5;
+}
+
+.aol-group {
+    background-color: #dae6ee;
+    color: #003c74;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #aca899;
+    border-bottom: 1px solid #aca899;
+}
+
+.aol-chat-box {
+    background-color: #ffffff;
+    border: 2px inset #aca899;
+    padding: 0.5rem;
+    height: 60vh;
+    overflow-y: auto;
+    box-shadow: inset 1px 1px 1px #aca899;
+    font-family: "Courier New", monospace;
+    font-size: 0.9rem;
+}
+
+.aol-user {
+    color: #0000ff;
+    font-weight: bold;
+}
+
+.aol-btn {
+    background-color: #ece9d8;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #aca899;
+    border-bottom: 1px solid #aca899;
+    color: #000000;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    padding: 2px 8px;
+    margin: 2px;
+}
+
+.aol-btn:active {
+    border-top: 1px solid #aca899;
+    border-left: 1px solid #aca899;
+    border-right: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+}
+
+.aol-btn-send {
+    background-color: #2961c1;
+    color: white;
+    border-top: 1px solid #5a82c5;
+    border-left: 1px solid #5a82c5;
+    border-right: 1px solid #104080;
+    border-bottom: 1px solid #104080;
+    font-weight: bold;
+}
+
+.aol-btn-send:active {
+    border-top: 1px solid #104080;
+    border-left: 1px solid #104080;
+    border-right: 1px solid #5a82c5;
+    border-bottom: 1px solid #5a82c5;
+}
+
+/* Effetto sonoro "You've Got Mail" */
+.aol-sound-icon {
+    color: #ff6600;
+    margin-right: 5px;
+}
+
+/* Stili per gli elementi della lista amici */
+.aol-buddy-list {
+    border: 2px groove #aca899;
+    background-color: #ece9d8;
+    padding: 2px;
+}
+
+.aol-buddy-header {
+    background-color: #2961c1;
+    color: white;
+    font-weight: bold;
+    padding: 2px 4px;
+}
+
+/* Stile per i messaggi di sistema */
+.aol-system-message {
+    color: #ff0000;
+    font-style: italic;
+}
+
+/* Stile per il campo di input */
+.aol-input {
+    border: 2px inset #aca899;
+    background-color: white;
+    padding: 3px;
+    font-family: "Courier New", monospace;
+}
+/* COLORI per utenti */
+.user-color-0 {
+    color: #1f77b4;
+}
+.user-color-1 {
+    color: #ff7f0e;
+}
+.user-color-2 {
+    color: #2ca02c;
+}
+.user-color-3 {
+    color: #d62728;
+}
+.user-color-4 {
+    color: #9467bd;
+}
+.user-color-5 {
+    color: #8c564b;
+}
+.user-color-6 {
+    color: #e377c2;
+}
+.user-color-7 {
+    color: #7f7f7f;
+}
+.user-color-8 {
+    color: #bcbd22;
+}
+.user-color-9 {
+    color: #17becf;
+}
