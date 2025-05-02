@@ -38,6 +38,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -75,6 +76,11 @@ class User extends Authenticatable
     public function chats()
     {
         return $this->belongsToMany(Chat::class, 'user_chat', 'id_user', 'id_chat');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'id_sender', 'id');
     }
 
 }
