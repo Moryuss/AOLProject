@@ -48,4 +48,20 @@ class DataLayer
     {
         return Message::where('id_chat', $chatId)->get();
     }
+
+
+    public function writeMsg($senderId, $chatId, $text)
+    {
+        $msg = new Message();
+        $msg->id_sender = $senderId;
+        $msg->id_chat = $chatId;
+        $msg->text = $text;
+        $msg->save();
+    }
+    public function modMsg($msgId, $text)
+    {
+        $msg = Message::find($msgId);
+        $msg->text = $text;
+        $msg->save();
+    }
 }
