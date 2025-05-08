@@ -6,14 +6,14 @@
 
 @section('sidebar')
     {{-- Qui poi metterȯ la possibilitȧ di cambiare user, per ora è un fake che trovi in chat controller --}}
-    <h5>Chat & Groups di {{$user->getUsername()}} </h5>
+    <h5>Chat & Groups di {{$user->username}} </h5>
     <ul class="list-group">
         @if(!isset($chats))
             <a class="list-group-item aol-list-item" href="#">New Chat</a>
         @else
             @foreach ($chats as $chat)
                 <a class="list-group-item aol-list-item"
-                    href="{{route('chat.specificChat', ['chat_selected' => $chat->getIDChat()])}}">{{ $chat->getChatName() }}</a>
+                    href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">{{ $chat->chat_name }}</a>
             @endforeach
         @endif
         {{-- <li class="list-group-item aol-list-item">Utente1</li>
@@ -44,14 +44,14 @@
     @else
     @foreach ($msgs as $msg)
         @foreach ($usernames as $u)
-            @if ($u->getId() == $msg->getIdSender())
+            @if ($u->id == $msg->sender_id)
                 @php
-                    $isMine = $u->getId() == $myId;
+                    $isMine = $u->id == $myId;
                     $alignment = $isMine ? 'text-end' : 'text-start';
-                    $colorClass = 'user-color-' . ($u->getId() % 10);   //style.css HA I COLORI
+                    $colorClass = 'user-color-' . ($u->id % 10);   //style.css HA I COLORI
                 @endphp
                 <p class="{{ $alignment }}">
-                    <strong class="{{ $colorClass }}">{{ $u->getUsername() }}:</strong>
+                    <strong class="{{ $colorClass }}">{{ $u->username }}:</strong>
                     {{ $msg->getText() }}
                 </p>
                 @break
