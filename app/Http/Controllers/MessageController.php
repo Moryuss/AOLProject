@@ -12,6 +12,12 @@ class MessageController extends Controller
         $dl = new DataLayer();
         $dl->writeMsg($request->input('id_sender'), $request->input('id_chat'), $request->input('text'));
 
+    }
+
+    public function edit(Request $request)
+    {
+        $dl = new DataLayer();
+        $dl->modMsg($request->input('msgId'), $request->input('text'));
 
     }
 }
