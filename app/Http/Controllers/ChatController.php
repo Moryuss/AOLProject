@@ -18,7 +18,7 @@ class ChatController extends Controller
         $fakeUser = $this->getFakeUser();
 
         // Finto utente attivo
-        $chatList = $dl->getChatsForUser($fakeUser->getId());
+        $chatList = $dl->getChatsForUser($fakeUser->id);
 
         return view('index')->with('user', $fakeUser)->with('chats', $chatList);
     }
@@ -31,7 +31,7 @@ class ChatController extends Controller
 
         // Finto utente: attivo
 
-        $chatList = $dl->getChatsForUser($fakeUser->getId());
+        $chatList = $dl->getChatsForUser($fakeUser->id);
         $usernames_chat = $dl->getUsersInChat($chat_id);
         $msgList = $dl->getMessagesForChat($chat_id);
 
