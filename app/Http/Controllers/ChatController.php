@@ -43,12 +43,11 @@ class ChatController extends Controller
             with('msgs', $msgList);
     }
 
-    private function getFakeUser(): User
+    private function getFakeUser()
     {
         // Simulo un utente loggato (user ID)
-        return new User(1, 'Matteo');
-        // return new User(2, 'Alice');
-
+        $dl = new DataLayer();
+        return $dl->getUser(1);
     }
 
 }

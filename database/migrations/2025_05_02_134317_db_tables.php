@@ -32,6 +32,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        //...[ inutile, sono gli stessi dati di msg? ]
         Schema::create('user_chat', function (Blueprint $table) {
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_chat');

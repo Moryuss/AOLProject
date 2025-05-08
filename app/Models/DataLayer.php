@@ -16,99 +16,36 @@ class DataLayer
 
     public function getUser($userId)
     {
-        $users = array();
-        $users[] = new User(1, 'Matteo');
-        $users[] = new User(2, 'Alice');
-        $users[] = new User(3, 'Bob');
-
-        foreach ($users as $user) {
-            if ($user->getId() == $userId) {
-                return $user;
-            }
-        }
-
-        return null; // Nessun utente trovato
+        return User::find($userId);
     }
 
 
     public function getAllUsers()
     {
-        $users = array();
-        $users[] = new User(1, 'Matteo');
-        $users[] = new User(2, 'Alice');
-        $users[] = new User(3, 'Bob');
-        return $users;
+        return User::all();
     }
 
     public function getAllChats()
     {
-        $chats = array();
-
-        $chats[] = new Chat(1, 'Generale');
-        $chats[] = new Chat(2, 'Segreta');
-
-        return $chats;
+        return Chat::all();
     }
 
     // #TEST Method!!!
-    public function getAliceChats()
-    {
-
-        $chats = array();
-
-        $chats[] = new Chat(3, 'AliceChat');
-
-        return $chats;
-    }
 
 
     public function getUsersInChat($chatId)
     {
-        if ($chatId == 1) {
-            $users = array();
-            $users[] = self::getUser(1);
-            $users[] = self::getUser(2);
-            $users[] = self::getUser(3);
-
-            return $users;
-        }
-        if ($chatId == 2) {
-            $users = array();
-            $users[] = self::getUser(1);
-
-            return $users;
-        }
-        if ($chatId == 3) {
-            $users = array();
-            $users[] = self::getUser(2);
-
-            return $users;
-        }
+        return User::findMany($chatId);
     }
 
     public function getChatsForUser($userId)
     {
-        if ($userId == 1) {
-            return self::getAllChats();
-        }
-        if ($userId == 2) {
-            return self::getAliceChats();
-        }
+        return Chat::findMany($userId);
     }
 
 
     public function getMessagesForChat($chatId)
     {
-
-        $messages = [
-            new Message(1, 1, 1, 'Ciao a tutti!'),
-            new Message(2, 1, 2, 'Ciao Matteo!'),
-            new Message(3, 2, 1, 'Solo forever'),
-            new Message(4, 1, 3, 'Brum Brum Patapim'),
-            new Message(5, 3, 2, 'Alice alone'),
-
-        ];
-
-        return array_filter($messages, fn($msg) => $msg->getIdChat() == $chatId);
+        return Message::where('id_chat', $chatId)->get();
     }
 }
