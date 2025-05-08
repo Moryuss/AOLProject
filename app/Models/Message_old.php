@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Message
+class Message_old
 {
     private $idMsg;
     private $id_chat;

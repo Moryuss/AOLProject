@@ -32,13 +32,15 @@ class ChatController extends Controller
         // Finto utente: attivo
 
         $chatList = $dl->getChatsForUser($fakeUser->id);
-        $usernames_chat = $dl->getUsersInChat($chat_id);
+        $usernamesOfChat = $dl->getUsersInChat($chat_id);
         $msgList = $dl->getMessagesForChat($chat_id);
 
+        // dd($chatList);  // per debugging
+        // dd($msgList);
 
         return view('index')->
             with('user', $fakeUser)->
-            with('usernames', $usernames_chat)->
+            with('usernames', $usernamesOfChat)->
             with('chats', $chatList)->
             with('msgs', $msgList);
     }

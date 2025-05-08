@@ -29,8 +29,13 @@ class DatabaseSeeder extends Seeder
 
         foreach ($chats as $chat) {
             $numberOfMsg = rand(1, 6);
-            $sender = $users->random(1);
-            Message::factory()->count($numberOfMsg)->create(['id_sender' => $sender->id, 'id_chat' => $chat->id]);
+            for ($b = 0; $b < $numberOfMsg; $b++) {
+                $sender = $users->random();
+                Message::factory()->count(1)->create(['id_sender' => $sender->id, 'id_chat' => $chat->id]);
+
+                $chat->users()->syncWithoutDetaching([$sender->id]);
+
+            }
         }
     }
 }

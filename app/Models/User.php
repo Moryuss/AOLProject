@@ -14,20 +14,20 @@ class User extends Authenticatable
     private $id;
     private $username;
 
-    public function __construct($identifier, $userName)
-    {
-        $this->id = $identifier;
-        $this->username = $userName;
-    }
+    // public function __construct($identifier, $userName)
+    // {
+    //     $this->id = $identifier;
+    //     $this->username = $userName;
+    // }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-    public function getUsername()
-    {
-        return $this->username;
-    }
+    // public function getId()
+    // {
+    //     return $this->id;
+    // }
+    // public function getUsername()
+    // {
+    //     return $this->username;
+    // }
 
 
 

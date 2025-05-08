@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-class Chat
+class Chat_old
 {
     private $idChat;
 

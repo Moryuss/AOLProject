@@ -40,7 +40,7 @@ class DataLayer
 
     public function getChatsForUser($userId)
     {
-        return Chat::findMany($userId);
+        return User::findOrFail($userId)->chats;
     }
 
 
