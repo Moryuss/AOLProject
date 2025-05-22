@@ -14,6 +14,7 @@
             @foreach ($chats as $chat)
                 <a class="list-group-item aol-list-item"
                     href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">{{ $chat->chat_name }}</a>
+
             @endforeach
         @endif
     </ul>
@@ -58,11 +59,20 @@
     @endIf
 </div>
 <div class="input-group mt-3">
-    <input type="text" class="form-control" placeholder="Scrivi qui il messaggio">
+    <form action="{{ route('message.store') }}" method="POST" class="input-group mt-3">
+        @csrf
+        <input type="hidden" name="id_sender" value="{{ $user->id }}">
+        <input type="hidden" name="id_chat" value="{{ $current_chat_id }}">
 
-    <button class="btn aol-btn"><i class="bi bi-emoji-smile-fill"></i></button>
-    <button class="btn aol-btn"><i class="bi bi-fonts"></i></button>
-    <button class="btn aol-btn"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>
-    <button class="btn aol-btn-send"><i class="bi bi-caret-right-fill"></i></button>
+        <input type="text" name="text" class="form-control" placeholder="Scrivi qui il messaggio" required>
+
+        <button class="btn aol-btn"><i class="bi bi-emoji-smile-fill"></i></button>
+        <button class="btn aol-btn"><i class="bi bi-fonts"></i></button>
+        <button class="btn aol-btn"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+        <button class="btn aol-btn-send"><i class="bi bi-caret-right-fill"></i></button>
+    </form>
 </div>
+
+
+
 @endsection

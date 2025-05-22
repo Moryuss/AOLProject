@@ -42,6 +42,7 @@ class ChatController extends Controller
             with('user', $fakeUser)->
             with('usernames', $usernamesOfChat)->
             with('chats', $chatList)->
+            with('current_chat_id', $chat_id)->
             with('msgs', $msgList);
     }
 
