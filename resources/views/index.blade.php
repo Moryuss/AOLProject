@@ -1,3 +1,17 @@
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
 @extends('layouts.master')
 
 @section('title')
@@ -69,13 +83,14 @@
             <input type="hidden" name="id_sender" value="{{ auth()->user()->id }}">
             @if (isset($current_chat_id))
                 <input type="hidden" name="id_chat" value="{{ $current_chat_id }}">
-            @endif
-            <input type="text" name="text" class="form-control" placeholder="Scrivi qui il messaggio" required>
 
-            <button class="btn aol-btn"><i class="bi bi-emoji-smile-fill"></i></button>
-            <button class="btn aol-btn"><i class="bi bi-fonts"></i></button>
-            <button class="btn aol-btn"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>
-            <button class="btn aol-btn-send"><i class="bi bi-caret-right-fill"></i></button>
+                <input type="text" name="text" class="form-control" placeholder="Scrivi qui il messaggio" required>
+
+                <button class="btn aol-btn"><i class="bi bi-emoji-smile-fill"></i></button>
+                <button class="btn aol-btn"><i class="bi bi-fonts"></i></button>
+                <button class="btn aol-btn"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+                <button class="btn aol-btn-send"><i class="bi bi-caret-right-fill"></i></button>
+            @endif
         </form>
     @else
         <h5>Login to write</h5>
