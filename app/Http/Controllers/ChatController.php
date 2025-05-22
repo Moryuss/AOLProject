@@ -49,7 +49,7 @@ class ChatController extends Controller
     {
         // Simulo un utente loggato (user ID)
         $dl = new DataLayer();
-        return $dl->getUser(1);
+        return $dl->getUser(3);
     }
 
 }

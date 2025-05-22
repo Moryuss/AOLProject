@@ -28,8 +28,8 @@
     $fontColor = session('font_color', '#000000');
     $bgColor = session('bg_color', '#ffffff');
 
-    // TEMPORANEO
-    $myId = 1;
+    // TEMPORANEO; Usato SOLO per mettere a destra il proprio nome. Le chat del user sono decise da $user, variabile di sessione
+    $myId = 3;
 @endphp
 
 <div class="chat-box aol-chat-box"
