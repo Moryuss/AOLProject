@@ -35,8 +35,19 @@
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="text" placeholder="Username">
-                    <a href="{{ route('settings.index') }}" class="btn btn-outline-light"><i
-                            class="bi bi-person-gear"></i></a>
+                    @if (auth()->check())
+                        <li class="nav-item">Welcome {{auth()->user()->name}}</li>
+                        <form method="POST" action="{{ route('logout')}}">
+                            @csrf
+                            <button type="submit" style="background: none; border: none; padding: 0;">
+                                <i class="bi bi-box-arrow-right"></i>
+                            </button>
+                        </form>
+                    @else
+
+                        <a href="{{ route('login')}}" class="btn btn-outline-light"><i class="bi bi-person-gear"></i></a>
+
+                    @endif
                 </form>
             </div>
         </div>
