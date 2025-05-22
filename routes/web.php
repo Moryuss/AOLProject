@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/', [ChatController::class, 'index'])->name('chat.index');
 Route::get('/chat/{chat_selected}', [ChatController::class, 'get_chat'])->name('chat.specificChat');
-Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat.show');
+//Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat.show');
 
 
 Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');

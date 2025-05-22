@@ -35,13 +35,12 @@
     $bgColor = session('bg_color', '#ffffff');
 
     // TEMPORANEO; Usato SOLO per mettere a destra il proprio nome. Le chat del user sono decise da $user, variabile di sessione
-    $myId = 3;
+
 @endphp
 
 <div class="chat-box aol-chat-box"
     style="font-family: {{ $font }}; font-size: {{ $fontSize }}px; color: {{ $fontColor }}; background-color: {{ $bgColor }}">
-    {{--
-    <pre>{{ dd($msgs) }}</pre> //Debug, il msg c'è --}}
+
 
     @if(!isset($msgs) || $msgs->isEmpty())
         <h1>Inizia a chattare!</h1>
@@ -49,7 +48,7 @@
     @foreach ($msgs as $msg)
         @php
             $u = $msg->user; // Ottieni l'utente direttamente dalla relazione
-            $isMine = $u->id == $myId;
+            $isMine = $u->id == auth()->user()->id;
             $alignment = $isMine ? 'text-end' : 'text-start';
             $colorClass = 'user-color-' . ($u->id % 10);   //style.css ha i colori
         @endphp

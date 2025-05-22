@@ -13,44 +13,57 @@ class ChatController extends Controller
 
     public function index()
     {
-        $dl = new DataLayer();
-        // Simulo un utente loggato (user ID)
-        $fakeUser = $this->getFakeUser();
+        try {
+            $dl = new DataLayer();
+            $user = auth()->user(); // Già garantito dal middleware
 
-        // Finto utente attivo
-        $chatList = $dl->getChatsForUser($fakeUser->id);
+            $chatList = $dl->getChatsForUser($user->id);
 
-        return view('index')->with('user', $fakeUser)->with('chats', $chatList);
+            return view('index')
+                ->with('user', $user)
+                ->with('chats', $chatList);
+
+        } catch (\Exception $e) {
+            \Log::error('Errore index: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Errore nel caricamento della pagina.');
+        }
     }
 
     public function get_chat($chat_id)
     {
+
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Devi essere loggato per accedere alla chat.');
+        }
         $dl = new DataLayer();
 
-        $fakeUser = $this->getFakeUser();
+        // Invece del fake user, usa l'utente autenticato
+        $user = auth()->user();
 
-        // Finto utente: attivo
+        // Opzionale: controlla che l'utente sia autenticato
+        try {
+            // Opzionale: verifica che l'utente abbia accesso a questa chat
+            $userChats = $dl->getChatsForUser($user->id);
+            $hasAccess = $userChats->contains('id', $chat_id);
 
-        $chatList = $dl->getChatsForUser($fakeUser->id);
-        $usernamesOfChat = $dl->getUsersInChat($chat_id);
-        $msgList = $dl->getMessagesForChat($chat_id);
+            if (!$hasAccess) {
+                return redirect()->back()->with('error', 'Non hai accesso a questa chat.');
+            }
 
-        // dd($chatList);  // per debugging
-        // dd($msgList);
+            $chatList = $dl->getChatsForUser($user->id);
+            $usernamesOfChat = $dl->getUsersInChat($chat_id);
+            $msgList = $dl->getMessagesForChat($chat_id);
 
-        return view('index')->
-            with('user', $fakeUser)->
-            with('usernames', $usernamesOfChat)->
-            with('chats', $chatList)->
-            with('current_chat_id', $chat_id)->
-            with('msgs', $msgList);
+            return view('index')
+                ->with('user', $user)
+                ->with('usernames', $usernamesOfChat)
+                ->with('chats', $chatList)
+                ->with('current_chat_id', $chat_id)
+                ->with('msgs', $msgList);
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Errore nel caricamento della chat.');
+        }
+
     }
-
-    private function getFakeUser()
-    {
-        // Simulo un utente loggato (user ID)
-        $dl = new DataLayer();
-        return $dl->getUser(3);
-    }
-
 }
