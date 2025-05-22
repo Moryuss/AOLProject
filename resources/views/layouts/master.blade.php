@@ -33,22 +33,22 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="#">Chat</a></li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="text" placeholder="Username">
-                    @if (auth()->check())
-                        <li class="nav-item">Welcome {{auth()->user()->name}}</li>
-                        <form method="POST" action="{{ route('logout')}}">
-                            @csrf
-                            <button type="submit" style="background: none; border: none; padding: 0;">
-                                <i class="bi bi-box-arrow-right"></i>
-                            </button>
-                        </form>
-                    @else
 
-                        <a href="{{ route('login')}}" class="btn btn-outline-light"><i class="bi bi-person-gear"></i></a>
+                @if (auth()->check())
+                    <a class="nav-item nav-link">Welcome {{auth()->user()->name}}</a>
+                    <form method="POST" action="{{ route('logout')}}" onsubmit=alert('submit works button works!')>
+                        @csrf
+                        <button type="submit" class="btn btn-outline-light">
+                            <i class=" bi bi-box-arrow-right"></i>
+                        </button>
+                    </form>
+                @else
 
-                    @endif
-                </form>
+                    <a href="{{ route('login')}}" class="btn btn-outline-light"><i class="bi bi-person-gear"></i></a>
+
+                @endif
+
+
             </div>
         </div>
     </nav>
