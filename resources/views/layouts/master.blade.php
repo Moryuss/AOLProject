@@ -24,31 +24,30 @@
 <body class="aol-body">
     <nav class="navbar navbar-expand-lg aol-navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('chat.index')}}">AOL Chat</a>
+            <a class="navbar-brand btn" href="{{ route('chat.index')}}">AOL Chat</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="list-group-item aol-list-item" href="{{ route('chat.search')}}">New
-                            Chat</a>
-                    </li>
-                </ul>
-
                 @if (auth()->check())
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link " href="{{ route('chat.search')}}">New Chat</a>
+                        </li>
+                    </ul>
+
                     <a class="nav-item nav-link">Welcome {{auth()->user()->name}}</a>
+
+                    <a href="{{ route('settings.index')}}" class="btn btn aol-btn"><i class="bi bi-gear-fill"></i></a>
+
                     <form method="POST" action="{{ route('logout')}}">
                         @csrf
-                        <button type="submit" class="btn btn-outline-light">
+                        <button type="submit" class="btn btn aol-btn">
                             <i class=" bi bi-box-arrow-right"></i>
                         </button>
                     </form>
-                    <a href="{{ route('settings.index')}}" class="btn btn-outline-light"><i class="bi bi-gear-fill"></i></a>
 
-                @else
-
-                    <a href="{{ route('login')}}" class="btn btn-outline-light"><i class="bi bi-person-gear"></i></a>
+                    {{-- <a href="{{ route('login')}}" class="btn btn aol-btn"><i class="bi bi-person-gear"></i></a> --}}
 
                 @endif
 

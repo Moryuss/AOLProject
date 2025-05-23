@@ -6,20 +6,20 @@
 
 @section('body')
     <div class="container aol-body">
-        <h3>Inizia una nuova chat</h3>
+        <h3 class="aol-buddy-header">Inizia una nuova chat</h3>
 
-        <input type="text" id="userSearch" class="form-control mb-3" placeholder="Cerca utente...">
+        <input type="text" id="userSearch" class="form-control mb-3 aol-input" placeholder="Cerca utente...">
 
-        <ul class="list-group" id="userList">
+        <ul class="list-group aol-buddy-list" id="userList">
             @foreach ($users as $user)
-                <li class="list-group-item">
-                    {{ $user->name }}
-                    <form action="{{ route('chat.start', $user->id) }}" method="POST">
+                <li class="list-group-item aol-list-item">
+                    <strong class="aol-user">{{ $user->name }}</strong>
+                    <form action="{{ route('chat.start', $user->id) }}" method="POST" class="mt-2">
                         @csrf
-                        <input type="text" name="text" class="form-control d-inline w-75" placeholder="Scrivi un messaggio...">
-                        <button type="submit" class="btn btn-sm btn-primary">Invia</button>
+                        <input type="text" name="text" class="form-control d-inline w-75 aol-input"
+                            placeholder="Scrivi un messaggio...">
+                        <button type="submit" class="btn btn-sm aol-btn aol-btn-send">Invia</button>
                     </form>
-
                 </li>
             @endforeach
         </ul>

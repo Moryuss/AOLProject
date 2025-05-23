@@ -1,14 +1,14 @@
 @if(session('error'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
@@ -21,7 +21,7 @@
 @section('sidebar')
     @if (auth()->check())
         <h5>Chat & Groups di {{auth()->user()->name}} </h5>
-        <ul class="list-group">
+        <ul class="list-group aol-group">
 
             @foreach ($chats as $chat)
                 <a class="list-group-item aol-list-item"
@@ -73,9 +73,9 @@
 
     @endIf
 </div>
-<div class="input-group mt-3">
+<div class="input-group mt-3 ">
     @if (auth()->check())
-        <form action="{{ route('message.store') }}" method="POST" class="input-group mt-3">
+        <form action="{{ route('message.store') }}" method="POST" class="input-group mt-3 aol-input">
             @csrf
             <input type="hidden" name="id_sender" value="{{ auth()->user()->id }}">
             @if (isset($current_chat_id))
