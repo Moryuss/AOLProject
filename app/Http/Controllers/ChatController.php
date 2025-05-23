@@ -64,6 +64,34 @@ class ChatController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Errore nel caricamento della chat.');
         }
-
     }
+
+    public function search_chat()
+    {
+        $users = User::where('id', '!=', auth()->id())->get();
+
+        return view('chat_index', compact('users'));
+    }
+
+
+    public function start_chat(Request $request, $userID)
+    {
+        $dl = new DataLayer();
+        $idSender = auth()->id();
+        $idReceiver = $userID;
+
+        // Trova o crea una chat 1-to-1
+        $chat = $dl->getChatBetweenUsers($idSender, $idReceiver);
+
+        if (!$chat) {
+            $chat = $dl->createChat($idSender, $idReceiver);
+        }
+
+        // Scrivi primo messaggio
+        $dl->writeMsg($idSender, $chat->id, $request->input('text'));
+
+        return redirect()->route('chat', ['chat_id' => $chat->id]);
+    }
+
+
 }

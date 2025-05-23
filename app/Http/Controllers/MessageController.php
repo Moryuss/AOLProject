@@ -13,7 +13,7 @@ class MessageController extends Controller
         $dl->writeMsg($request->input('id_sender'), $request->input('id_chat'), $request->input('text'));
         // return view('index');
 
-        return redirect()->route('chat.show', ['chat_id' => $request->input('id_chat')]);
+        return redirect()->route('chat', ['chat_id' => $request->input('id_chat')]);
     }
 
     public function edit(Request $request)

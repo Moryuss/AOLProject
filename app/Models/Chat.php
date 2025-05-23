@@ -13,6 +13,8 @@ class Chat extends Model
 
     protected $table = 'chats';
 
+    protected $fillable = ['chat_name'];
+
 
     public function messages()
     {

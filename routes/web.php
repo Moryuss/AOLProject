@@ -46,7 +46,12 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
 
     Route::get('/', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{chat_selected}', [ChatController::class, 'get_chat'])->name('chat.specificChat');
     Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat');
+
+    Route::get('/chat_index', [ChatController::class, 'search_chat'])->name('chat.search');
+    Route::post('/chat_index/{user}', [ChatController::class, 'start_chat'])->name('chat.start');
+
 
     Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');
     Route::get('/settings/{setting_selected}', [SettingsController::class, 'get_setting'])->name('settings.sidebarSetting');

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Str;
+
 
 class DataLayer
 {
@@ -64,4 +66,50 @@ class DataLayer
         $msg->text = $text;
         $msg->save();
     }
+
+    public function getChatBetweenUsers($id1, $id2)
+    {
+        $user1Chats = UserChat::where('id_user', $id1)->pluck('id_chat')->toArray();
+        $user2Chats = UserChat::where('id_user', $id2)->pluck('id_chat')->toArray();
+
+        $commonChatIds = array_intersect($user1Chats, $user2Chats);
+
+        foreach ($commonChatIds as $chatId) {
+            $userCount = UserChat::where('id_chat', $chatId)->count();
+            if ($userCount == 2) {
+                return Chat::find($chatId);
+            }
+        }
+
+        return null;
+    }
+
+
+    public function createChat($id1, $id2)
+    {
+        $chatName = $this->generateChatName($id1, $id2);
+
+        $chat = Chat::create([
+            'chat_name' => $chatName,
+        ]);
+
+        UserChat::insert([
+            ['id_user' => $id1, 'id_chat' => $chat->id],
+            ['id_user' => $id2, 'id_chat' => $chat->id],
+        ]);
+
+        return $chat;
+    }
+
+    private function generateChatName($id1, $id2)
+    {
+        $name1 = User::find($id1)->name ?? 'user1';
+        $name2 = User::find($id2)->name ?? 'user2';
+
+        return $name1 . '_and_' . $name2 . '_' . Str::random(3);
+    }
+
+
+
+
 }

@@ -23,8 +23,8 @@
     @if (auth()->check())
         <h5>Chat & Groups di {{auth()->user()->name}} </h5>
         <ul class="list-group">
-            @if(!isset($chats))
-                <a class="list-group-item aol-list-item" href="#">New Chat</a>
+            @if(empty($chats))
+                <a class="list-group-item aol-list-item" href="{{ route('chat.search')}}">New Chat</a>
             @else
                 @foreach ($chats as $chat)
                     <a class="list-group-item aol-list-item"
