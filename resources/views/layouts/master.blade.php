@@ -31,7 +31,9 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" href="">Chat</a></li>
+                    <li class="nav-item"><a class="list-group-item aol-list-item" href="{{ route('chat.search')}}">New
+                            Chat</a>
+                    </li>
                 </ul>
 
                 @if (auth()->check())

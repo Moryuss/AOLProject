@@ -19,19 +19,16 @@
 @endsection
 
 @section('sidebar')
-    {{-- Qui poi metterȯ la possibilitȧ di cambiare user, per ora è un fake che trovi in chat controller --}}
     @if (auth()->check())
         <h5>Chat & Groups di {{auth()->user()->name}} </h5>
         <ul class="list-group">
-            @if(empty($chats))
-                <a class="list-group-item aol-list-item" href="{{ route('chat.search')}}">New Chat</a>
-            @else
-                @foreach ($chats as $chat)
-                    <a class="list-group-item aol-list-item"
-                        href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">{{ $chat->chat_name }}</a>
 
-                @endforeach
-            @endif
+            @foreach ($chats as $chat)
+                <a class="list-group-item aol-list-item"
+                    href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">{{ $chat->chat_name }}</a>
+
+            @endforeach
+
         </ul>
     @else
         <h5>Login to see chats</h5>

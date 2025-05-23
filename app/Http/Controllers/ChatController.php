@@ -76,6 +76,13 @@ class ChatController extends Controller
 
     public function start_chat(Request $request, $userID)
     {
+
+        $request->validate([
+            'text' => 'required|string|min:1',
+        ], [
+            'text.required' => 'Inserisci un messaggio per chattare.',
+        ]);
+
         $dl = new DataLayer();
         $idSender = auth()->id();
         $idReceiver = $userID;

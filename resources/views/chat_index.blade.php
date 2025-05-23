@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-    <div class="container">
+    <div class="container aol-body">
         <h3>Inizia una nuova chat</h3>
 
         <input type="text" id="userSearch" class="form-control mb-3" placeholder="Cerca utente...">
@@ -33,6 +33,20 @@
             users.forEach(user => {
                 const name = user.textContent.toLowerCase();
                 user.style.display = name.includes(search) ? '' : 'none';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = document.querySelectorAll('#userList form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    const input = form.querySelector('input[name="text"]');
+                    if (!input.value.trim()) {
+                        e.preventDefault();
+                        alert('Inserisci un messaggio per chattare.');
+                    }
+                });
             });
         });
     </script>
