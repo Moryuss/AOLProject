@@ -36,12 +36,14 @@
 
                 @if (auth()->check())
                     <a class="nav-item nav-link">Welcome {{auth()->user()->name}}</a>
-                    <form method="POST" action="{{ route('logout')}}" onsubmit=alert('submit works button works!')>
+                    <form method="POST" action="{{ route('logout')}}">
                         @csrf
                         <button type="submit" class="btn btn-outline-light">
                             <i class=" bi bi-box-arrow-right"></i>
                         </button>
                     </form>
+                    <a href="{{ route('settings.index')}}" class="btn btn-outline-light"><i class="bi bi-gear-fill"></i></a>
+
                 @else
 
                     <a href="{{ route('login')}}" class="btn btn-outline-light"><i class="bi bi-person-gear"></i></a>

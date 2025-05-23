@@ -22,11 +22,11 @@ Route::get('/', function () {
 //Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat.show');
 
 
-Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');
-Route::get('/settings/{setting_selected}', [SettingsController::class, 'get_setting'])->name('settings.sidebarSetting');
-Route::post('settings/update', [SettingsController::class, 'updatePersonalization'])->name('setting.update');
+// Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');
+// Route::get('/settings/{setting_selected}', [SettingsController::class, 'get_setting'])->name('settings.sidebarSetting');
+// Route::post('settings/update', [SettingsController::class, 'updatePersonalization'])->name('setting.update');
 
-Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
+// Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
 
 
 
@@ -38,6 +38,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
+});
+
+Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
+
+    Route::get('/', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat');
+
+    Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');
+    Route::get('/settings/{setting_selected}', [SettingsController::class, 'get_setting'])->name('settings.sidebarSetting');
+    Route::post('settings/update', [SettingsController::class, 'updatePersonalization'])->name('setting.update');
+
+    Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
+});
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+
 });
 
 require __DIR__ . '/auth.php';

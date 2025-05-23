@@ -10,6 +10,9 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SettingsController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -59,8 +62,4 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
-
-
-    Route::get('/', [ChatController::class, 'index'])->name('chat.index');
-    Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat');
 });
