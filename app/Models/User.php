@@ -49,6 +49,9 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    protected $attributes = [
+        'role' => 'basic_user', // Qui specifichi i valori di default
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
