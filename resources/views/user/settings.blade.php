@@ -10,6 +10,8 @@
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 3)}}">🔒 Utenti Bloccati</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 4)}}">🔔 Notifiche</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 5)}}">🎨 Personalizzazione</a>
+                <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 5)}}">🎨 Personalizzazione</a>
+
     </ul>
 @endsection
 

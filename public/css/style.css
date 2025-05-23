@@ -127,6 +127,8 @@ body.aol-body {
     border-right: 1px solid #aca899;
     border-bottom: 1px solid #aca899;
     font-weight: normal;
+    font-size: normal;
+    font-family: "Courier New", monospace;
     color: #000000;
     cursor: pointer;
     padding: 4px 8px;
@@ -157,8 +159,20 @@ body.aol-body {
 }
 
 .aol-user {
-    color: #0000ff;
-    font-weight: bold;
+    background: #1e5aa8;
+    color: #ffffff;
+    font-family: "MS Sans Serif", sans-serif;
+    font-size: 25px;
+    font-weight: normal;
+    padding: 4px 8px 4px 8px;
+    border-top: 1px solid #5fa3f5;
+    border-left: 1px solid #5fa3f5;
+    border-right: 1px solid #0d4788;
+    border-bottom: 1px solid #0d4788;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    border-radius: 8px;
 }
 
 .aol-btn {

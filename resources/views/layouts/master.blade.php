@@ -36,7 +36,7 @@
                         </li>
                     </ul>
 
-                    <a class="nav-item nav-link">Welcome {{auth()->user()->name}}</a>
+                    <a class="nav-item nav-link aol-user">Welcome {{auth()->user()->name}}</a>
 
                     <a href="{{ route('settings.index')}}" class="btn btn aol-btn"><i class="bi bi-gear-fill"></i></a>
 

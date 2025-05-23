@@ -73,15 +73,16 @@
 
     @endIf
 </div>
-<div class="input-group mt-3 ">
+<div class="input-group mt-3">
     @if (auth()->check())
-        <form action="{{ route('message.store') }}" method="POST" class="input-group mt-3 aol-input">
-            @csrf
-            <input type="hidden" name="id_sender" value="{{ auth()->user()->id }}">
+        <form action="{{ route('message.store') }}" method="POST" class="input-group mt-3 ">
             @if (isset($current_chat_id))
+                @csrf
+                <input type="hidden" name="id_sender" value="{{ auth()->user()->id }}">
+
                 <input type="hidden" name="id_chat" value="{{ $current_chat_id }}">
 
-                <input type="text" name="text" class="form-control" placeholder="Scrivi qui il messaggio" required>
+                <input type="text" name="text" class="form-control aol-input" placeholder="Scrivi qui il messaggio" required>
 
                 <button class="btn aol-btn"><i class="bi bi-emoji-smile-fill"></i></button>
                 <button class="btn aol-btn"><i class="bi bi-fonts"></i></button>
