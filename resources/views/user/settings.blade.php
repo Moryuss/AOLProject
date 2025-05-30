@@ -10,7 +10,7 @@
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 3)}}">🔒 Utenti Bloccati</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 4)}}">🔔 Notifiche</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 5)}}">🎨 Personalizzazione</a>
-                <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 5)}}">🎨 Personalizzazione</a>
+        <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 6)}}">🔧 Admin Upgrade</a>
 
     </ul>
 @endsection
@@ -76,8 +76,9 @@
 
             // ADD more font HERE
             $fonts = ['Tahoma', 'Verdana', 'Comic Sans MS', 'Courier New'];
-
         @endphp
+       
+        
 
         <div class="chat-box" 
         style="font-family: {{ $font }}; font-size: {{ $fontSize }}px; color: {{ $fontColor }}; background-color: {{ $bgColor }}">
@@ -119,6 +120,25 @@
 
             <button class="btn aol-btn-send">Salva</button>
         </form>
+        @break
+
+         @case(6)
+        <!-- Per diventare Admin-->
+        <h5>Admin Upgrade</h5>
+        @if(auth()->user()->role == 'basic_user')
+            <h6>Per diventare admin devi passare il <strong>trial del fuoco</strong></h6>
+            <form action="{{ route('user.evolve') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-danger btn-sm mb-4">EVOLVE</button>
+            </form>
+        @elseif(auth()->user()->role == 'admin')
+        <h1>La tua avarizia non ha limite. ADMIN {{auth()->user()->name}} non troverai nulla qui tranne ...</h1>
+        <form action="{{ route('user.humble') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-danger btn-sm mb-4">BE HUMBLED</button>
+            </form>
+        @endIf
+
         @break
 
         @default

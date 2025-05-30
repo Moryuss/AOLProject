@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserController;
 
 
 
@@ -43,7 +44,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat/{chat_selected}', [ChatController::class, 'get_chat'])->name('chat.specificChat');
@@ -58,8 +59,16 @@ Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
     Route::post('settings/update', [SettingsController::class, 'updatePersonalization'])->name('setting.update');
 
     Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
-});
 
+
+    Route::post('/evolve', [UserController::class, 'evolve'])->name('user.evolve');
+    Route::post('/humble', [UserController::class, 'humble'])->name('user.humble');
+
+
+});
+Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
+
+});
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 });
