@@ -64,40 +64,25 @@
     @if (auth()->check())
         <button class="btn btn-primary d-md-none m-3 aol-btn" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#sidebarOffcanvas">
-            <i class="bi bi-list"></i>
+            <i class="bi bi-list"> Chats</i>
         </button>
     @endif
 
     <div class="container-fluid p-0">
         <div class="row g-0">
             <!-- Sidebar come offcanvas per mobile, normale per desktop -->
-            <div class="offcanvas-md offcanvas-start col-md-3 p-3 aol-sidebar" tabindex="-1" id="sidebarOffcanvas">
+            <div class="offcanvas-md offcanvas-start col-md-3 p-2 aol-sidebar" tabindex="-1" id="sidebarOffcanvas">
                 <div class="offcanvas-header d-md-none">
                     <button type="button" class="btn-close text-reset aol-btn" data-bs-dismiss="offcanvas"
                         data-bs-target="#sidebarOffcanvas" aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body p-0">
+                <div class="p-0">
                     @yield('sidebar')
                 </div>
             </div>
 
-            {{-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
-
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-header">
-                    <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    ...
-                </div>
-            </div> --}}
-
             <!-- Contenuto principale -->
-            <div class="col-12 col-md-9 p-3">
+            <div class="col-md-9 p-3">
                 @yield('body')
             </div>
         </div>
