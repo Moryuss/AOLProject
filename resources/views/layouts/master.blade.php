@@ -64,7 +64,7 @@
     @if (auth()->check())
         <button class="btn btn-primary d-md-none m-3 aol-btn" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#sidebarOffcanvas">
-            <i class="bi bi-list"> Chats</i>
+            <i class="bi bi-list"></i>
         </button>
     @endif
 
