@@ -87,7 +87,7 @@ class ChatController extends Controller
         $idSender = auth()->id();
         $idReceiver = $userID;
 
-        // Trova o crea una chat 1-to-1
+        // Trova o crea una chat 
         $chat = $dl->getChatBetweenUsers($idSender, $idReceiver);
 
         if (!$chat) {

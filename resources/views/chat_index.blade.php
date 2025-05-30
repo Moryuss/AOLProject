@@ -18,7 +18,7 @@
                         @csrf
                         <input type="text" name="text" class="form-control d-inline w-75 aol-input"
                             placeholder="Scrivi un messaggio...">
-                        <button type="submit" class="btn btn-sm aol-btn aol-btn-send">Invia</button>
+                        <button type="submit" class="btn btn-sm aol-btn-send">Invia</button>
                     </form>
                 </li>
             @endforeach
@@ -26,28 +26,24 @@
     </div>
 
     <script>
-        document.getElementById('userSearch').addEventListener('keyup', function () {
-            const search = this.value.toLowerCase();
-            const users = document.querySelectorAll('#userList li');
+        $(document).ready(function () {
+            $('#userSearch').on('keyup', function () {
+                var search = $(this).val().toLowerCase();
 
-            users.forEach(user => {
-                const name = user.textContent.toLowerCase();
-                user.style.display = name.includes(search) ? '' : 'none';
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const forms = document.querySelectorAll('#userList form');
-
-            forms.forEach(form => {
-                form.addEventListener('submit', function (e) {
-                    const input = form.querySelector('input[name="text"]');
-                    if (!input.value.trim()) {
-                        e.preventDefault();
-                        alert('Inserisci un messaggio per chattare.');
-                    }
+                $('#userList li').each(function () {
+                    var name = $(this).text().toLowerCase();
+                    $(this).toggle(name.includes(search));
                 });
             });
+
+            $('#userList form').on('submit', function (e) {
+                var input = $(this).find('input[name="text"]');
+                if (!input.val().trim()) {
+                    e.preventDefault();
+                    alert('Inserisci un messaggio per chattare.');
+                }
+            });
         });
+
     </script>
 @endsection

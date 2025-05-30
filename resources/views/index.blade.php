@@ -20,12 +20,14 @@
 
 @section('sidebar')
     @if (auth()->check())
+        <input type="text" id="chatSearch" class="form-control mb-3 aol-input" placeholder="Cerca chat...">
         <h5>Chat & Groups di {{auth()->user()->name}} </h5>
-        <ul class="list-group aol-group">
+        <ul class="list-group aol-group" id="chatList">
 
             @foreach ($chats as $chat)
-                <a class="list-group-item aol-list-item"
-                    href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">{{ $chat->chat_name }}</a>
+                <li class="list-group-item aol-list-item" href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">
+                    {{ $chat->chat_name }}
+                </li>
 
             @endforeach
 
@@ -34,6 +36,20 @@
         <h5>Login to see chats</h5>
     @endif
 
+
+    <script>
+        $(document).ready(function () {
+            $('#chatSearch').on('keyup', function () {
+                var search = $(this).val().toLowerCase();
+
+                $('#chatList li').each(function () {
+                    var name = $(this).text().toLowerCase();
+                    $(this).toggle(name.includes(search));
+                });
+            });
+        });
+
+    </script>
 @endsection
 
 
