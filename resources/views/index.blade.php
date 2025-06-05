@@ -25,11 +25,14 @@
         <ul class="list-group aol-group" id="chatList">
 
             @foreach ($chats as $chat)
-                <li class="list-group-item aol-list-item" href="{{route('chat.specificChat', ['chat_selected' => $chat->id])}}">
-                    {{ $chat->chat_name }}
+                <li class="list-group-item aol-list-item">
+                    <a href="{{ route('chat.specificChat', ['chat_selected' => $chat->id]) }}"
+                        class="d-block text-decoration-none text-body">
+                        {{ $chat->chat_name }}
+                    </a>
                 </li>
-
             @endforeach
+
 
         </ul>
     @else
