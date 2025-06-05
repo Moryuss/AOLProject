@@ -35,13 +35,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -66,13 +64,19 @@ Route::middleware(['auth'])->group(function () {
 
 
 });
+
 Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
 
 });
+
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('/chat/manage-users', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
     Route::get('/chat/rename', [ChatController::class, 'rename'])->name('chat.rename');
+
+    // web.php
+    Route::get('/chat/manage-users/{chat}', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
+    Route::post('/chat/manage-users/{chat}/{user}', [ChatController::class, 'manageUsersAction'])->name('chat.manageUsersAction');
 });
 
 require __DIR__ . '/auth.php';

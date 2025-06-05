@@ -37,7 +37,7 @@ class ChatController extends Controller
         }
         $dl = new DataLayer();
 
-        // Invece del fake user, usa l'utente autenticato
+
         $user = auth()->user();
 
         // Opzionale: controlla che l'utente sia autenticato
@@ -87,7 +87,7 @@ class ChatController extends Controller
         $idSender = auth()->id();
         $idReceiver = $userID;
 
-        // Trova o crea una chat 
+        // Trova o crea una chat, dipende se esiste già
         $chat = $dl->getChatBetweenUsers($idSender, $idReceiver);
 
         if (!$chat) {
@@ -102,11 +102,27 @@ class ChatController extends Controller
 
 
     //Per aggiungere/rimuovere dalla chat un user
-    public function manageUsers(Request $request)
+    public function manageUsers(Chat $chat)
     {
-
+        //prende la chat selezionata (da Request? come fa? devo inviarlàcon un @post?? (con controllo che una sia selezionata)
+        //usando un altra pagina che ho fatto per iniziare le chat (riuso) posso far si che se ha ricevuto una chat:
+        //invece che fare quello che fa normalmente (inizializzare nuova chat) aggiunge/toglie dalla chat il user selezionato
+        $users = User::where('id', '!=', auth()->id())->get();
+        return view('manage-users', compact('chat', 'users'));
     }
 
+    public function manageUsersAction(Chat $chat, User $user)
+    {
+        if ($chat->users()->where('users.id', $user->id)->exists()) {
+            // Rimuove utente
+            $chat->users()->detach($user->id);
+        } else {
+            // Aggiunge utente
+            $chat->users()->attach($user->id);
+        }
+
+        return redirect()->route('chat.manageUsers', $chat->id)->with('success', 'Utente aggiornato');
+    }
     public function rename(Request $request)
     {
 

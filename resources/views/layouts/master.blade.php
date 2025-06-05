@@ -34,11 +34,12 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
 
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link " href="{{ route('chat.search')}}">New Chat</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('chat.search')}}">[New Chat]</a>
                         </li>
+                        @yield('navbar')
                     </ul>
 
-                    @yield('navbar');
+
 
                     {{-- Cambia il welcome se è admin o no --}}
                     <a class="nav-item nav-link">

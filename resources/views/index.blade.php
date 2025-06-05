@@ -57,17 +57,17 @@
 
 
 @section('navbar')
-    <a href="{{ route('chat.manageUsers') }}" class="btn aol-btn me-2">
-        Add/remove user to chat
-    </a>
-
-    <a href="{{ route('chat.rename') }}" class="btn aol-btn">
-        Change Chat Name
-    </a>
+    {{-- Serve controllare dato che appena entrati non c'è alcuna chat selezionata --}}
+    @if (isset($current_chat_id))
+        <li class="nav-item"><a class="nav-link" href="{{ route('chat.manageUsers', $current_chat_id) }}">
+                [Add/remove user to chat]
+            </a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('chat.rename') }}">
+                [Change Chat Name]
+            </a></li>
+    @endif
 @endsection
 
-
-@endsection
 
 @section('body')
 
