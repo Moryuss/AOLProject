@@ -207,7 +207,7 @@
         // Aggiorna la pagina ogni 3 secondi
         setInterval(function () {
             window.location.reload();
-        }, 10000);
+        }, 20000);
     });
 </script>
 
