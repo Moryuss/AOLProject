@@ -55,10 +55,9 @@
 @endsection
 
 
-
 @section('navbar')
     {{-- Serve controllare dato che appena entrati non c'è alcuna chat selezionata --}}
-    @if (isset($current_chat_id))
+    @if (isset($current_chat_id) && @auth()->user()->role == 'admin')
         <li class="nav-item"><a class="nav-link" href="{{ route('chat.manageUsers', $current_chat_id) }}">
                 [Add/remove user to chat]
             </a></li>
