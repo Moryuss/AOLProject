@@ -55,15 +55,47 @@
 
 
 @section('navbar')
-    {{-- Serve controllare dato che appena entrati non c'è alcuna chat selezionata --}}
     @if (isset($current_chat) && @auth()->user()->role == 'admin')
+        <!-- Modal: Rename Chat Logic -->
+        <div class="modal fade" id="renameChatModal" tabindex="-1" aria-labelledby="renameChatModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="{{ route('chat.rename') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id_chat" value="{{ $current_chat->id }}">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title aol-text" id="renameChatModalLabel">Rinomina Chat:
+                                {{$current_chat->chat_name}}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="chat_name" class="form-label aol-text">Nuovo nome</label>
+                                <input type="text" class="form-control" name="chat_name" id="chat_name" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <button type="submit" class="btn btn-primary">Salva</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {{-- Serve controllare dato che appena entrati non c'è alcuna chat selezionata --}}
+
         <li class="nav-item"><a class="nav-link" href="{{ route('chat.manageUsers', $current_chat) }}">
                 [Add/remove user to chat]
                 {{-- VEDI qui se è ok mandare tutta la chat o basta l' id --}}
             </a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('chat.rename') }}">
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#renameChatModal">
                 [Change Chat Name]
-            </a></li>
+            </a>
+        </li>
+
     @endif
 @endsection
 
@@ -82,8 +114,8 @@
 @if (isset($current_chat))
     <h4 class="aol-chat-name">Chat: {{$current_chat->chat_name}}</h4>
 @endif
-<div class="chat-box aol-chat-box"
-    style="font-family: {{ $font }}; font-size: {{ $fontSize }}px; color: {{ $fontColor }}; background-color: {{ $bgColor }}">
+<div class="chat-box aol-chat-box" id="messages-container"
+    style="font-family: {{ $font }}; font-size: {{ $fontSize }}px; color: {{ $fontColor }}; background-color: {{ $bgColor }}; overflow-y: auto;">
 
 
     @if(!isset($msgs) || $msgs->isEmpty())
@@ -128,6 +160,55 @@
     @endif
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Salva e ripristina il contenuto del campo input
+        function saveInputContent() {
+            const inputValue = $('input[name="text"]').val();
+            const hasFocus = $('input[name="text"]').is(':focus');
+            sessionStorage.setItem('messageInput', inputValue); //storage!
+            sessionStorage.setItem('inputHasFocus', hasFocus);
+        }
 
+        function restoreInputContent() {
+            const savedValue = sessionStorage.getItem('messageInput');
+            const hadFocus = sessionStorage.getItem('inputHasFocus') === 'true';
+
+            if (savedValue) {
+                $('input[name="text"]').val(savedValue);
+            }
+
+            if (hadFocus) {
+                $('input[name="text"]').focus();
+            }
+        }
+
+        // Vai in fondo alla chat
+        function scrollToBottom() {
+            const container = document.getElementById('messages-container');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Salva il contenuto ogni volta che l'utente scrive
+        $('input[name="text"]').on('input focus blur', function () {
+            saveInputContent();
+        });
+
+        // Cancella il contenuto salvato quando si invia il messaggio
+        $('form').on('submit', function () {
+            sessionStorage.removeItem('messageInput');
+            sessionStorage.removeItem('inputHasFocus');
+        });
+
+        // Ripristina tutto al caricamento della pagina
+        restoreInputContent();
+        scrollToBottom();
+
+        // Aggiorna la pagina ogni 3 secondi
+        setInterval(function () {
+            window.location.reload();
+        }, 10000);
+    });
+</script>
 
 @endsection

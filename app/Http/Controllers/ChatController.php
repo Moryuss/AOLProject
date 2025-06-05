@@ -142,7 +142,17 @@ class ChatController extends Controller
 
     public function rename(Request $request)
     {
+        $request->validate([
+            'id_chat' => 'required|exists:chats,id',
+            'chat_name' => 'required|string|max:255',
+        ]);
 
+        $chat = Chat::findOrFail($request->input('id_chat'));
+        $chat->chat_name = $request->input('chat_name');
+        $chat->save();
+
+        return redirect()->back()->with('success', 'Nome della chat aggiornato');
     }
+
 
 }

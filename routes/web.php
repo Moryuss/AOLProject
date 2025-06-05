@@ -17,20 +17,6 @@ Route::get('/', function () {
 
 
 
-
-//Route::get('/', [ChatController::class, 'index'])->name('chat.index');
-//Route::get('/chat/{chat_selected}', [ChatController::class, 'get_chat'])->name('chat.specificChat');
-//Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat.show');
-
-
-// Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');
-// Route::get('/settings/{setting_selected}', [SettingsController::class, 'get_setting'])->name('settings.sidebarSetting');
-// Route::post('settings/update', [SettingsController::class, 'updatePersonalization'])->name('setting.update');
-
-// Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -71,7 +57,8 @@ Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
-    Route::get('/chat/rename', [ChatController::class, 'rename'])->name('chat.rename');
+    Route::post('/chat/rename', [ChatController::class, 'rename'])->name('chat.rename');
+
 
     Route::get('/chat/manage-users/{chat}', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
     Route::post('/chat/manage-users/{chat}/add/{user}', [ChatController::class, 'addUserToChat'])->name('chat.addUser');
