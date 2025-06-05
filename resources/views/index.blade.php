@@ -33,7 +33,6 @@
                 </li>
             @endforeach
 
-
         </ul>
     @else
         <h5>Login to see chats</h5>
@@ -55,6 +54,20 @@
     </script>
 @endsection
 
+
+
+@section('navbar')
+    <a href="{{ route('chat.manageUsers') }}" class="btn aol-btn me-2">
+        Add/remove user to chat
+    </a>
+
+    <a href="{{ route('chat.rename') }}" class="btn aol-btn">
+        Change Chat Name
+    </a>
+@endsection
+
+
+@endsection
 
 @section('body')
 

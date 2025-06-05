@@ -71,6 +71,8 @@ Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
 });
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
+    Route::get('/chat/manage-users', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
+    Route::get('/chat/rename', [ChatController::class, 'rename'])->name('chat.rename');
 });
 
 require __DIR__ . '/auth.php';

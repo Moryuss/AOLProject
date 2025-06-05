@@ -101,4 +101,15 @@ class ChatController extends Controller
     }
 
 
+    //Per aggiungere/rimuovere dalla chat un user
+    public function manageUsers(Request $request)
+    {
+
+    }
+
+    public function rename(Request $request)
+    {
+
+    }
+
 }

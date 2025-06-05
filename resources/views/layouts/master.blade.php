@@ -38,6 +38,7 @@
                         </li>
                     </ul>
 
+                    @yield('navbar');
 
                     {{-- Cambia il welcome se è admin o no --}}
                     <a class="nav-item nav-link">
@@ -53,10 +54,8 @@
                             <i class=" bi bi-box-arrow-right"></i>
                         </button>
                     </form>
+                </div>
             @endif
-
-
-            </div>
         </div>
     </nav>
 
