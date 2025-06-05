@@ -71,12 +71,11 @@ Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
-    Route::get('/chat/manage-users', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
     Route::get('/chat/rename', [ChatController::class, 'rename'])->name('chat.rename');
 
-    // web.php
     Route::get('/chat/manage-users/{chat}', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
-    Route::post('/chat/manage-users/{chat}/{user}', [ChatController::class, 'manageUsersAction'])->name('chat.manageUsersAction');
+    Route::post('/chat/manage-users/{chat}/add/{user}', [ChatController::class, 'addUserToChat'])->name('chat.addUser');
+    Route::post('/chat/manage-users/{chat}/remove/{user}', [ChatController::class, 'removeUserFromChat'])->name('chat.removeUser');
 });
 
 require __DIR__ . '/auth.php';

@@ -15,13 +15,16 @@
                 <li class="list-group-item aol-list-item d-flex justify-content-between align-items-center">
                     <strong class="aol-user">{{ $user->name }}</strong>
 
-                    <form action="{{ route('chat.manageUsersAction', [$chat->id, $user->id]) }}" method="POST">
+                    <form
+                        action="{{ route($userIdsInChat && in_array($user->id, $userIdsInChat) ? 'chat.removeUser' : 'chat.addUser', [$chat->id, $user->id]) }}"
+                        method="POST">
                         @csrf
                         <button type="submit"
-                            class="btn btn-sm {{ $chat->users->contains($user) ? 'btn-danger' : 'btn-success' }}">
-                            {{ $chat->users->contains($user) ? 'Rimuovi' : 'Aggiungi' }}
+                            class="btn btn-sm {{ $userIdsInChat && in_array($user->id, $userIdsInChat) ? 'btn-danger' : 'btn-success' }}">
+                            {{ $userIdsInChat && in_array($user->id, $userIdsInChat) ? 'Rimuovi' : 'Aggiungi' }}
                         </button>
                     </form>
+
                 </li>
             @endforeach
         </ul>

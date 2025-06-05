@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\DataLayer;
 use App\Models\Chat;
+use App\Models\UserChat;
 
 class ChatController extends Controller
 {
@@ -53,12 +54,13 @@ class ChatController extends Controller
             $chatList = $dl->getChatsForUser($user->id);
             $usernamesOfChat = $dl->getUsersInChat($chat_id);
             $msgList = $dl->getMessagesForChat($chat_id);
+            $current_chat = $dl->getChat($chat_id);
 
             return view('index')
                 ->with('user', $user)
                 ->with('usernames', $usernamesOfChat)
                 ->with('chats', $chatList)
-                ->with('current_chat_id', $chat_id)
+                ->with('current_chat', ($current_chat)) ///QUIIIIIIIIIIIIIIIIIIIIIIII
                 ->with('msgs', $msgList);
 
         } catch (\Exception $e) {
@@ -104,25 +106,40 @@ class ChatController extends Controller
     //Per aggiungere/rimuovere dalla chat un user
     public function manageUsers(Chat $chat)
     {
-        //prende la chat selezionata (da Request? come fa? devo inviarlàcon un @post?? (con controllo che una sia selezionata)
-        //usando un altra pagina che ho fatto per iniziare le chat (riuso) posso far si che se ha ricevuto una chat:
-        //invece che fare quello che fa normalmente (inizializzare nuova chat) aggiunge/toglie dalla chat il user selezionato
         $users = User::where('id', '!=', auth()->id())->get();
-        return view('manage-users', compact('chat', 'users'));
+
+        $userIdsInChat = UserChat::where('id_chat', $chat->id)->pluck('id_user')->toArray();
+
+        return view('manage-users', compact('chat', 'users', 'userIdsInChat'));
     }
 
-    public function manageUsersAction(Chat $chat, User $user)
+
+
+    public function addUserToChat(Chat $chat, User $user)
     {
-        if ($chat->users()->where('users.id', $user->id)->exists()) {
-            // Rimuove utente
-            $chat->users()->detach($user->id);
-        } else {
-            // Aggiunge utente
-            $chat->users()->attach($user->id);
+        $exists = UserChat::where('id_user', $user->id)
+            ->where('id_chat', $chat->id)
+            ->exists();
+
+        if (!$exists) {
+            UserChat::create([
+                'id_user' => $user->id,
+                'id_chat' => $chat->id,
+            ]);
         }
 
-        return redirect()->route('chat.manageUsers', $chat->id)->with('success', 'Utente aggiornato');
+        return redirect()->route('chat.manageUsers', $chat->id)->with('success', 'Utente aggiunto alla chat');
     }
+
+    public function removeUserFromChat(Chat $chat, User $user)
+    {
+        UserChat::where('id_user', $user->id)
+            ->where('id_chat', $chat->id)
+            ->delete();
+
+        return redirect()->route('chat.manageUsers', $chat->id)->with('success', 'Utente rimosso dalla chat');
+    }
+
     public function rename(Request $request)
     {
 

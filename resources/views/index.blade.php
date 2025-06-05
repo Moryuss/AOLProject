@@ -38,7 +38,6 @@
         <h5>Login to see chats</h5>
     @endif
 
-
     <script>
         $(document).ready(function () {
             $('#chatSearch').on('keyup', function () {
@@ -57,9 +56,10 @@
 
 @section('navbar')
     {{-- Serve controllare dato che appena entrati non c'è alcuna chat selezionata --}}
-    @if (isset($current_chat_id) && @auth()->user()->role == 'admin')
-        <li class="nav-item"><a class="nav-link" href="{{ route('chat.manageUsers', $current_chat_id) }}">
+    @if (isset($current_chat) && @auth()->user()->role == 'admin')
+        <li class="nav-item"><a class="nav-link" href="{{ route('chat.manageUsers', $current_chat) }}">
                 [Add/remove user to chat]
+                {{-- VEDI qui se è ok mandare tutta la chat o basta l' id --}}
             </a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('chat.rename') }}">
                 [Change Chat Name]
@@ -79,7 +79,9 @@
     // TEMPORANEO; Usato SOLO per mettere a destra il proprio nome. Le chat del user sono decise da $user, variabile di sessione
 
 @endphp
-
+@if (isset($current_chat))
+    <h4 class="aol-chat-name">Chat: {{$current_chat->chat_name}}</h4>
+@endif
 <div class="chat-box aol-chat-box"
     style="font-family: {{ $font }}; font-size: {{ $fontSize }}px; color: {{ $fontColor }}; background-color: {{ $bgColor }}">
 
@@ -107,11 +109,11 @@
 <div class="input-group mt-3">
     @if (auth()->check())
         <form action="{{ route('message.store') }}" method="POST" class="input-group mt-3 ">
-            @if (isset($current_chat_id))
+            @if (isset($current_chat))
                 @csrf
                 <input type="hidden" name="id_sender" value="{{ auth()->user()->id }}">
 
-                <input type="hidden" name="id_chat" value="{{ $current_chat_id }}">
+                <input type="hidden" name="id_chat" value="{{ $current_chat->id }}">
 
                 <input type="text" name="text" class="form-control aol-input" placeholder="Scrivi qui il messaggio" required>
 

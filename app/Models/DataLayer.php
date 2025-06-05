@@ -21,6 +21,11 @@ class DataLayer
         return User::find($userId);
     }
 
+    public function getChat($chatId)
+    {
+        return Chat::find($chatId);
+    }
+
 
     public function getAllUsers()
     {
