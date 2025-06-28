@@ -7,11 +7,8 @@
     <ul class="list-group">
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 1)}}">👥 Elenco Amici</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 2)}}">💬 Stato personale</a>
-        <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 3)}}">🔒 Utenti Bloccati</a>
-        <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 4)}}">🔔 Notifiche</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 5)}}">🎨 Personalizzazione</a>
         <a class="list-group-item aol-list-item" href="{{route('settings.sidebarSetting', 6)}}">🔧 Admin Upgrade</a>
-
     </ul>
 @endsection
 
@@ -27,12 +24,36 @@
         <!-- Elenco Amici -->
         <h5>👥 Amici</h5>
         <ul class="list-group mb-2">
-            <li class="list-group-item">Utente1</li>
-            <li class="list-group-item">Utente2</li>
+           @foreach(auth()->user()->friends as $friend)
+            <li class="list-group-item">
+                <span class="badge bg-primary">{{ $friend->status }}</span>
+                {{ $friend->name }}  ---- ID:  <strong>{{ $friend->id }}</strong>
+                <form action="{{ route('friend.remove', $friend->id) }}" method="POST" class="float-end">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-outline-danger btn-sm">Rimuovi</button>
+                </form>
+            </li>
+           @endforeach
         </ul>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Aggiungi nuovo amico">
-            <button class="btn aol-btn-send" disabled>Aggiungi (disabled)</button>
+            <form action="{{ route('friend.add') }}" method="POST">
+            @csrf
+                <input type="text" class="form-control" placeholder="Aggiungi nuovo amico" name="id_friend" required>
+                <button class="btn aol-btn-send">Aggiungi</button>
+    
+                <!-- Messaggi di stato/errore -->
+                @if(session('status'))
+                    <div class="alert alert-success mt-2">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger mt-2">
+                        {{ session('error') }}
+                    </div>
+                @endif
+            </form>
         </div>
         @break
 
@@ -40,29 +61,14 @@
         @case(2)
         <!-- Stato personale -->
         <h5>💬 Stato personale</h5>
-        <input type="text" class="form-control mb-3" placeholder="Es. 🎧 ascolto Musica">
-        @break
+        <form action="{{ route('user.status.update') }}" method="POST">
+            @csrf
+            <input type="text" class="form-control mb-3" name="status" placeholder="Es. 🎧 ascolto Musica" value="{{ auth()->user()->status ?? '' }}">
+            <button class="btn aol-btn-send mb-4">Aggiorna</button>
+        </form>
 
+        <div> <h6><i class="bi bi-person-bounding-box"></i> ID utente: <strong>{{ auth()->user()->id }}</strong></h6></div>
 
-        @case(3)
-        <!-- Privacy -->
-        <h5>🔒 Utenti bloccati</h5>
-        <ul class="list-group mb-3">
-            <li class="list-group-item">SpamBot42</li>
-        </ul>
-        <button class="btn btn-outline-danger btn-sm mb-4" disabled>Gestisci (disabled)</button>
-        @break
-
-
-        @case(4)
-        <!-- Notifiche -->
-        <h5>🔔 Suoni di notifica</h5>
-        <select class="form-select mb-4">
-            <option selected>✨ Ding (default)</option>
-            <option>📢 AOL Classic</option>
-            <option>📯 Retro Beep</option>
-            <option>🔕 Nessuno</option>
-        </select>
         @break
 
         @case(5)

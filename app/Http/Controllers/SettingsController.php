@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Faker\Core\Color;
 use Illuminate\Http\Request;
+use App\Models\DataLayer;
 
 class SettingsController extends Controller
 {
@@ -29,5 +30,12 @@ class SettingsController extends Controller
         ]);
 
         return view('user.settings');
+    }
+    public function updateStatus(Request $request)
+    {
+        $dl = new DataLayer();
+        $dl->updateUserStatus(auth()->id(), $request->input('status'));
+
+        return redirect()->back()->with('status', 'Stato aggiornato con successo!');
     }
 }

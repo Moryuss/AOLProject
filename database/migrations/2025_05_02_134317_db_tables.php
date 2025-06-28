@@ -42,6 +42,12 @@ return new class extends Migration {
 
         });
 
+        Schema::create('friendships', function (Blueprint $table) {
+            $table->foreignId('user_id');
+            $table->foreignId('friend_id');
+            $table->timestamps();
+        });
+
         //CREAZIONE FOREIGN KEYS
 
 
@@ -55,9 +61,9 @@ return new class extends Migration {
             $table->foreign('id_chat')->references('id')->on('chats');
         });
 
-        Schema::table('reviews', function (Blueprint $table) {
+        Schema::table('friendships', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('hotel_id')->references('id')->on('hotels');
+            $table->foreign('friend_id')->references('id')->on('users');
         });
     }
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\FriendshipController;
 
 
 
@@ -48,7 +48,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/evolve', [UserController::class, 'evolve'])->name('user.evolve');
     Route::post('/humble', [UserController::class, 'humble'])->name('user.humble');
 
+    Route::post('/user/status/update', [SettingsController::class, 'updateStatus'])->name('user.status.update');
 
+    Route::post('/friend/add', [FriendshipController::class, 'add'])->name('friend.add');
+    Route::delete('/friend/remove/{friend}', [FriendshipController::class, 'remove'])->name('friend.remove');
 });
 
 Route::middleware(['auth', 'isRegisteredUser'])->group(function () {

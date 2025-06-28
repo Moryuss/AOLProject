@@ -114,7 +114,48 @@ class DataLayer
         return $name1 . '_and_' . $name2 . '_' . Str::random(3);
     }
 
+    public function updateUserStatus($userId, $status)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $user->status = $status;
+            $user->save();
+        }
+    }
 
 
+    public function removeFriend($userId, $friendId)
+    {
+        Friendship::where([
+            'user_id' => $userId,
+            'friend_id' => $friendId
+        ])->delete();
 
+        Friendship::where([
+            'user_id' => $friendId,
+            'friend_id' => $userId
+        ])->delete();
+    }
+    public function addFriend($userId, $friendId)
+    {
+        // Crea entrambe le direzioni, altrimenti da problemi e non stampa se l'amicizia è esistente ma al contrario.
+        //Nota che ora non sono piu  chiavi univoche
+        Friendship::firstOrCreate([
+            'user_id' => $userId,
+            'friend_id' => $friendId
+        ]);
+
+        Friendship::firstOrCreate([
+            'user_id' => $friendId,
+            'friend_id' => $userId
+        ]);
+    }
+
+    public function friendshipExists($userId, $friendId)
+    {
+        return Friendship::where('user_id', $userId)
+            ->where('friend_id', $friendId)
+            ->exists();
+        // Non serve controllare l'inverso perché esistono entrambi i record
+    }
 }
