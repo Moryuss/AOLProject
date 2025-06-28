@@ -149,9 +149,7 @@
 
                 <input type="text" name="text" class="form-control aol-input" placeholder="Scrivi qui il messaggio" required>
 
-                <button class="btn aol-btn"><i class="bi bi-emoji-smile-fill"></i></button>
-                <button class="btn aol-btn"><i class="bi bi-fonts"></i></button>
-                <button class="btn aol-btn"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+
                 <button class="btn aol-btn-send"><i class="bi bi-caret-right-fill"></i></button>
             @endif
         </form>

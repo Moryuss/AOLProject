@@ -55,6 +55,10 @@ return new class extends Migration {
             $table->foreign('id_chat')->references('id')->on('chats');
         });
 
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('hotel_id')->references('id')->on('hotels');
+        });
     }
 
     /**
