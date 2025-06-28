@@ -128,22 +128,50 @@
         </form>
         @break
 
-         @case(6)
-        <!-- Per diventare Admin-->
-        <h5>Admin Upgrade</h5>
+        @case(6)
         @if(auth()->user()->role == 'basic_user')
-            <h6>Per diventare admin devi passare il <strong>trial del fuoco</strong></h6>
-            <form action="{{ route('user.evolve') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-danger btn-sm mb-4">EVOLVE</button>
-            </form>
-        @elseif(auth()->user()->role == 'admin')
-        <h1>La tua avarizia non ha limite. ADMIN {{auth()->user()->name}} non troverai nulla qui tranne ...</h1>
-        <form action="{{ route('user.humble') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-danger btn-sm mb-4">BE HUMBLED</button>
-            </form>
-        @endIf
+            <div class="card mb-4">
+                <div class="card-header">Diventa Admin</div>
+                <div class="card-body">
+                    <form action="{{ route('admin.upgrade') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="secret_password" class="form-label">Password Segreta</label>
+                            <input type="password" class="form-control" name="secret_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Verifica e Diventa Admin</button>
+                    </form>
+                </div>
+            </div>
+
+        @elseif(auth()->user()->role === 'admin')
+            <div class="card">
+                <div class="card-header">Promuovi Utente</div>
+                <div class="card-body">
+                    <form action="{{ route('admin.promote') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="user_id" class="form-label">Seleziona Utente</label>
+                            <select name="user_id" class="form-select" required>
+                                <option value="">-- Scegli un utente --</option>
+                                @foreach($basicUsers as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }} (ID: {{ $user->id }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Promuovi ad Admin</button>
+                    </form>
+                </div>
+            </div>
+        @endif
+
+    <!-- Messaggi di stato -->
+    @if(session('success'))
+        <div class="alert alert-success mt-3">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger mt-3">{{ session('error') }}</div>
+    @endif
 
         @break
 

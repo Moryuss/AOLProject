@@ -55,7 +55,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'isRegisteredUser'])->group(function () {
-
+    // Diventare admin (solo per utenti normali con password segreta)
+    Route::post('/admin/upgrade', [UserController::class, 'upgrade'])->name('admin.upgrade');
 });
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
@@ -66,6 +67,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/chat/manage-users/{chat}', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
     Route::post('/chat/manage-users/{chat}/add/{user}', [ChatController::class, 'addUserToChat'])->name('chat.addUser');
     Route::post('/chat/manage-users/{chat}/remove/{user}', [ChatController::class, 'removeUserFromChat'])->name('chat.removeUser');
+
+    // Promuovere altri utenti (solo per admin)
+    Route::post('/admin/promote', [UserController::class, 'promote'])->name('admin.promote');
 });
 
 require __DIR__ . '/auth.php';

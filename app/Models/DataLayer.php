@@ -20,6 +20,10 @@ class DataLayer
     {
         return User::find($userId);
     }
+    public function getBasicUsers()
+    {
+        return User::where('role', 'basic_user')->get();
+    }
 
     public function getChat($chatId)
     {
