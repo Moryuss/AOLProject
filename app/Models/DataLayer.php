@@ -165,4 +165,11 @@ class DataLayer
             'id_chat' => $chatId,
         ]);
     }
+    public function hasAccessToChat($chatId)
+    {
+        $hasAccess = UserChat::where('id_user', auth()->user()->id)
+            ->where('id_chat', $chatId)
+            ->exists();
+        return $hasAccess;
+    }
 }

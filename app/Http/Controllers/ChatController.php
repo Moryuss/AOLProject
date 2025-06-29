@@ -110,6 +110,15 @@ class ChatController extends Controller
 
         $userIdsInChat = UserChat::where('id_chat', $chat->id)->pluck('id_user')->toArray();
 
+        // Controlla che l'utente sia autenticato
+        //Nota chelo ho messo anche  in add e remove ... percheè se scrivevi l'url giusto potevi mandare
+        //le add/remove senza essere nella chat
+        $hasAccess = $this->hasAccessToChat($chat->id);
+
+        if (!$hasAccess || auth()->user()->role != 'admin') {
+            return redirect()->back()->with('error', 'Non hai accesso a questa chat.');
+        }
+
         return view('manage-users', compact('chat', 'users', 'userIdsInChat'));
     }
 
@@ -154,6 +163,7 @@ class ChatController extends Controller
         if (!$hasAccess || auth()->user()->role != 'admin') {
             return redirect()->back()->with('error', 'Non hai accesso a questa chat.');
         }
+
         UserChat::where('id_user', $user->id)
             ->where('id_chat', $chat->id)
             ->delete();
@@ -181,9 +191,7 @@ class ChatController extends Controller
         $dl = new DataLayer();
         // Controlla che l'utente abbia accesso alla chat, altrimenti passsando dall'url tutti potevano modificare 
         // le chat degli altri
-        $userAdmin = auth()->user();
-        $userChats = $dl->getChatsForUser($userAdmin->id);
-        $hasAccess = $userChats->contains('id', $chatId);
+        $hasAccess = $dl->hasAccessToChat($chatId);
         return $hasAccess;
     }
 
