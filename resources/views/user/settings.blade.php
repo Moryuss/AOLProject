@@ -38,11 +38,18 @@
         </ul>
         <div class="input-group mb-3">
             <form action="{{ route('friend.add') }}" method="POST">
-            @csrf
-                <input type="text" class="form-control" placeholder="Aggiungi nuovo amico" name="id_friend" required>
-                <button class="btn aol-btn-send">Aggiungi</button>
-    
-                <!-- Messaggi di stato/errore -->
+                @csrf
+                <div class="mb-3">
+                    <label for="id_friend" class="form-label">Seleziona Utente</label>
+                    <select name="id_friend" class="form-select" required>
+                        <option value="">-- Scegli un utente --</option>
+                                @foreach($allUsers as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }} (ID: {{ $user->id }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Aggiungi Amico</button>
+                       <!-- Messaggi di stato/errore -->
                 @if(session('status'))
                     <div class="alert alert-success mt-2">
                         {{ session('status') }}
@@ -53,7 +60,7 @@
                         {{ session('error') }}
                     </div>
                 @endif
-            </form>
+                    </form>
         </div>
         @break
 

@@ -17,13 +17,18 @@ class SettingsController extends Controller
     {
         $dl = new DataLayer();
         $basicUsers = $dl->getBasicUsers();  // Ottieni utenti basic_user tramite DataLayer
+        $allUsers = $dl->getAllUsers(); // Ottieni tutti gli utenti tramite DataLayer
 
+        if ($settingID == 1) // Se l'ID della sezione è 1, mostra la sezione per la gestione degli Amici
+            return view('user.settings')->with([
+                'allUsers' => $allUsers,
+                'setting_selected' => $settingID
+            ]);
         if ($settingID == 6) // Se l'ID della sezione è 6, mostra la sezione per la gestione degli utenti. Modo facile per non dover modificare tutto
             return view('user.settings')->with([
                 'basicUsers' => $basicUsers,
                 'setting_selected' => $settingID
             ]);
-
         return view('user.settings')->with('setting_selected', $settingID);
     }
 

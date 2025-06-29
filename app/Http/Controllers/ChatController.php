@@ -117,15 +117,24 @@ class ChatController extends Controller
 
     public function addUserToChat(Chat $chat, User $user)
     {
-        $exists = UserChat::where('id_user', $user->id)
-            ->where('id_chat', $chat->id)
-            ->exists();
+        $dl = new DataLayer();
+        // Controlla che l'utente sia autenticato
+        // Questo è già garantito dal middleware, ma lo aggiungo per sicurezza
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Devi essere loggato per aggiungere utenti alla chat.');
+        }
+        $hasAccess = $this->hasAccessToChat($chat->id);
+
+        //controllo di sicurezza. Grazie ai middleware non dovrebbe capitare ma ...
+        if (!$hasAccess || auth()->user()->role != 'admin') {
+            return redirect()->back()->with('error', 'Non hai accesso a questa chat.');
+        }
+
+        $exists = $dl->checkUserInChat($user->id, $chat->id);
+
 
         if (!$exists) {
-            UserChat::create([
-                'id_user' => $user->id,
-                'id_chat' => $chat->id,
-            ]);
+            $dl->addUserToChat($user->id, $chat->id);
         }
 
         return redirect()->route('chat.manageUsers', $chat->id)->with('success', 'Utente aggiunto alla chat');
@@ -133,6 +142,18 @@ class ChatController extends Controller
 
     public function removeUserFromChat(Chat $chat, User $user)
     {
+        $dl = new DataLayer();
+        // Controlla che l'utente sia autenticato
+        // Questo è già garantito dal middleware, ma lo aggiungo per sicurezza
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Devi essere loggato per aggiungere utenti alla chat.');
+        }
+        $hasAccess = $this->hasAccessToChat($chat->id);
+
+        //controllo di sicurezza. Grazie ai middleware non dovrebbe capitare ma ...
+        if (!$hasAccess || auth()->user()->role != 'admin') {
+            return redirect()->back()->with('error', 'Non hai accesso a questa chat.');
+        }
         UserChat::where('id_user', $user->id)
             ->where('id_chat', $chat->id)
             ->delete();
@@ -154,5 +175,16 @@ class ChatController extends Controller
         return redirect()->back()->with('success', 'Nome della chat aggiornato');
     }
 
+
+    private function hasAccessToChat(int $chatId)
+    {
+        $dl = new DataLayer();
+        // Controlla che l'utente abbia accesso alla chat, altrimenti passsando dall'url tutti potevano modificare 
+        // le chat degli altri
+        $userAdmin = auth()->user();
+        $userChats = $dl->getChatsForUser($userAdmin->id);
+        $hasAccess = $userChats->contains('id', $chatId);
+        return $hasAccess;
+    }
 
 }

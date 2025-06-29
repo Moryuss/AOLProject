@@ -6,16 +6,6 @@ use Illuminate\Support\Str;
 
 class DataLayer
 {
-    #è la relazione ponte tra chat e user, da sostituire con Models/Relations.php
-    public function getRelations()
-    {
-        return [
-            ['chat_id' => 1, 'user_id' => 1],
-            ['chat_id' => 1, 'user_id' => 2],
-            ['chat_id' => 2, 'user_id' => 3],
-        ];
-    }
-
     public function getUser($userId)
     {
         return User::find($userId);
@@ -30,7 +20,6 @@ class DataLayer
         return Chat::find($chatId);
     }
 
-
     public function getAllUsers()
     {
         return User::all();
@@ -40,9 +29,6 @@ class DataLayer
     {
         return Chat::all();
     }
-
-    // #TEST Method!!!
-
 
     public function getUsersInChat($chatId)
     {
@@ -128,6 +114,7 @@ class DataLayer
     }
 
 
+    // FRIENDSHIP METHODS
     public function removeFriend($userId, $friendId)
     {
         Friendship::where([
@@ -161,5 +148,21 @@ class DataLayer
             ->where('friend_id', $friendId)
             ->exists();
         // Non serve controllare l'inverso perché esistono entrambi i record
+    }
+
+
+    //ADD E REMOVE USER FROM CHAT
+    public function checkUserInChat($userId, $chatId)
+    {
+        return UserChat::where('id_user', $userId)
+            ->where('id_chat', $chatId)
+            ->exists();
+    }
+    public function addUserToChat($userId, $chatId)
+    {
+        UserChat::create([
+            'id_user' => $userId,
+            'id_chat' => $chatId,
+        ]);
     }
 }
