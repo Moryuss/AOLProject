@@ -1,3 +1,17 @@
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 @extends('layouts.master')
 
 @section('title', 'Centro impostazioni')
@@ -28,6 +42,7 @@
             <li class="list-group-item">
                 <span class="badge bg-primary">{{ $friend->status }}</span>
                 {{ $friend->name }}  ---- ID:  <strong>{{ $friend->id }}</strong>
+                
                 <form action="{{ route('friend.remove', $friend->id) }}" method="POST" class="float-end">
                     @csrf
                     @method('DELETE')
@@ -91,7 +106,6 @@
             $fonts = ['Tahoma', 'Verdana', 'Comic Sans MS', 'Courier New'];
         @endphp
        
-        
 
         <div class="chat-box" 
         style="font-family: {{ $font }}; font-size: {{ $fontSize }}px; color: {{ $fontColor }}; background-color: {{ $bgColor }}">

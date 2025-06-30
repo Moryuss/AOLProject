@@ -13,8 +13,15 @@ class SettingsController extends Controller
         return view('user.settings');
     }
 
-    public function get_setting(int $settingID)
+    public function get_setting($settingID)
     {
+        //Questo accade se provi a scrivere una lettera da url
+        if (!is_numeric($settingID)) {
+            // Reindirizza 
+            return redirect()->back()->with('error', 'Il parametro deve essere numerico');
+        }
+
+        $settingID = (int) $settingID;
         $dl = new DataLayer();
         $basicUsers = $dl->getBasicUsers();  // Ottieni utenti basic_user tramite DataLayer
         $allUsers = $dl->getAllUsers(); // Ottieni tutti gli utenti tramite DataLayer

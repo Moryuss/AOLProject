@@ -41,9 +41,8 @@ class ChatController extends Controller
 
         $user = auth()->user();
 
-        // Opzionale: controlla che l'utente sia autenticato
+        // controlla che l'utente stia accedendo alla propria chat
         try {
-            // Opzionale: verifica che l'utente abbia accesso a questa chat
             $userChats = $dl->getChatsForUser($user->id);
             $hasAccess = $userChats->contains('id', $chat_id);
 
@@ -99,7 +98,7 @@ class ChatController extends Controller
         // Scrivi primo messaggio
         $dl->writeMsg($idSender, $chat->id, $request->input('text'));
 
-        return redirect()->route('chat', ['chat_id' => $chat->id]);
+        return redirect()->route('chat.specificChat', ['chat_selected' => $chat->id]);
     }
 
 

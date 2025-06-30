@@ -149,7 +149,6 @@
 
                 <input type="text" name="text" class="form-control aol-input" placeholder="Scrivi qui il messaggio" required>
 
-
                 <button class="btn aol-btn-send"><i class="bi bi-caret-right-fill"></i></button>
             @endif
         </form>
@@ -202,7 +201,7 @@
         restoreInputContent();
         scrollToBottom();
 
-        // Aggiorna la pagina ogni 3 secondi
+        // Aggiorna la pagina ogni 20000 millisecondi
         setInterval(function () {
             window.location.reload();
         }, 20000);

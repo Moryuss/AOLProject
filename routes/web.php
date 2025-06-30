@@ -32,10 +32,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat/{chat_selected}', [ChatController::class, 'get_chat'])->name('chat.specificChat');
-    Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat');
+    #Route::get('/chat/{chat_id}', [ChatController::class, 'get_chat'])->name('chat');
 
     Route::get('/chat_index', [ChatController::class, 'search_chat'])->name('chat.search');
-    Route::post('/chat_index/{user}', [ChatController::class, 'start_chat'])->name('chat.start');
+    Route::post('/chat_index/{user}', [ChatController::class, 'start_chat'])->name('chat.start'); ##
 
 
     Route::get('/settings', [SettingsController::class, 'user_index'])->name('settings.index');
@@ -45,8 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/message/store', [MessageController::class, 'store'])->name('message.store');
 
 
+    #ora inutilizzati, sostituiti da upgrade
     Route::post('/evolve', [UserController::class, 'evolve'])->name('user.evolve');
     Route::post('/humble', [UserController::class, 'humble'])->name('user.humble');
+
 
     Route::post('/user/status/update', [SettingsController::class, 'updateStatus'])->name('user.status.update');
 
@@ -63,7 +65,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::post('/chat/rename', [ChatController::class, 'rename'])->name('chat.rename');
 
-
+    #Risolto questo come risolto in ChatController il problema di accedere a chat non proprie
     Route::get('/chat/manage-users/{chat}', [ChatController::class, 'manageUsers'])->name('chat.manageUsers');
     Route::post('/chat/manage-users/{chat}/add/{user}', [ChatController::class, 'addUserToChat'])->name('chat.addUser');
     Route::post('/chat/manage-users/{chat}/remove/{user}', [ChatController::class, 'removeUserFromChat'])->name('chat.removeUser');
